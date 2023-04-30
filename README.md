@@ -75,7 +75,7 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 source ~/.zshrc
 ```
     
-# Подготавливаем проект
+# Установка Django
 * Создаём папку приложения (заменить `<root_dir>` на удобное название проекта)
 ```
 mkdir <root_dir> && cd <root_dir>
@@ -106,3 +106,4 @@ sudo ufw allow 8000
 ```
 python3 manage.py runserver 0:8000
 ```
+
