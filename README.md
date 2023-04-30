@@ -1,5 +1,5 @@
 # Инструкция по настрйоке VPS-сервера
-### Базовая настройка сервера
+## Базовая настройка сервера
 * Создать нового пользователя `www`
 ```
 adduser www
@@ -75,14 +75,14 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 source ~/.zshrc
 ```
     
-# Установка Django
-* Создаём папку приложения (заменить `<root_dir>` на удобное название проекта)
+## Установка Django
+* Создаём папку приложения (заменить `<ROOT_DIR>` на удобное название проекта)
 ```
-mkdir <root_dir> && cd <root_dir>
+mkdir <ROOT_DIR> && cd <ROOT_DIR>
 ```
 * Скачиваем проект с Github
 ```
-git clone <repo>
+git clone <REPO>
 ```
 * Создаём виртуальное окружение и активируем его
 ```
@@ -107,3 +107,65 @@ sudo ufw allow 8000
 python3 manage.py runserver 0:8000
 ```
 
+## Установка Gunicorn
+* Создать файл `/etc/systemd/system/gunicorn.socket` и добавить в него следующий код:
+```
+[Unit]
+Description=gunicorn socket
+[Socket]
+ListenStream=/run/gunicorn.sock
+[Install]
+WantedBy=sockets.target
+```
+* Создать файл `/etc/systemd/system/gunicorn.service` и добавить в него следующий код:
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+[Service]
+User=<USER>
+Group=<GROUP>
+WorkingDirectory=<ROOT_DIR>
+ExecStart=<ROOT_DIR>/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          myproject.wsgi:application
+[Install]
+WantedBy=multi-user.target
+```
+* Запускаем Gunicorn
+```
+sudo systemctl start gunicorn.socket
+```
+```
+sudo systemctl enable gunicorn.socket
+```
+* Проверяем, что Gunicorn запустился
+```
+sudo systemctl status gunicorn.socket
+```
+* Проверяем, что файл существует
+```
+file /run/gunicorn.sock
+```
+* gunicorn.service должен быть неактивен
+```
+sudo systemctl status gunicorn
+```
+* Если следующая команда возвращает HTML - то всё ок
+```
+curl --unix-socket /run/gunicorn.sock localhost
+```
+* Убедиться в этом можно выполнив
+```
+sudo systemctl status gunicorn
+```
+* Перезапускаем Gunicorn
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl restart gunicorn
+```
