@@ -74,3 +74,35 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 ```
 source ~/.zshrc
 ```
+    
+# Подготавливаем проект
+* Создаём папку приложения (заменить `<root_dir>` на удобное название проекта)
+```
+mkdir <root_dir> && cd <root_dir>
+```
+* Скачиваем проект с Github
+```
+git clone <repo>
+```
+* Создаём виртуальное окружение и активируем его
+```
+python3 -m venv venv && source venv/bin/activate
+```
+* Устанавливаем Gunicorn и зависимости проекта
+```
+pip3 install --upgrade pip && pip3 install gunicorn && pip3 install -r requirements.txt
+```
+* Если необходимо - настраиваем проект (настраиваем settings.py, .env и т.д.)
+* Делаем миграции
+```
+python3 manage.py makemigrations && python3 manage.py migrate
+```
+* Если нужно - заагружаем дамп базы данных
+* Открываем порт 8000
+```
+sudo ufw allow 8000
+```
+* Запускаем develop-сервер для проверки
+```
+python3 manage.py runserver 0:8000
+```
