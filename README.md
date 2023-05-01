@@ -107,7 +107,7 @@ sudo ufw allow 8000
 python3 manage.py runserver 0:8000
 ```
 
-## Установка Gunicorn
+## Настройка Gunicorn
 * Создать файл `/etc/systemd/system/gunicorn.socket` и добавить в него следующий код:
 ```
 [Unit]
@@ -131,7 +131,7 @@ ExecStart=<ROOT_DIR>/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
-          myproject.wsgi:application
+          <PROJECT_NAME>.wsgi:application
 [Install]
 WantedBy=multi-user.target
 ```
@@ -168,4 +168,39 @@ sudo systemctl daemon-reload
 ```
 ```
 sudo systemctl restart gunicorn
+```
+## Настройка Nginx
+* Восздать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
+```
+server {
+    listen 80;
+    server_name <DOMAIN OR IP>;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root <STATIC_DIR>;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+}
+```
+* Создать символьную ссылку
+```
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled
+```
+* Проверить работу Nginx
+```
+sudo nginx -t
+```
+* Перезапустить Nginx
+```
+sudo systemctl restart nginx
+```
+* Изменить настройки портов
+```
+sudo ufw delete allow 8000
+sudo ufw allow 'Nginx Full'
 ```
