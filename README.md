@@ -173,18 +173,16 @@ sudo systemctl restart gunicorn
 * Восздать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
 ```
 server {
-    listen 80;
-    server_name <DOMAIN OR IP>;
-
-    location = /favicon.ico { access_log off; log_not_found off; }
-    location /static/ {
-        root <STATIC_DIR>;
-    }
-
-    location / {
-        include proxy_params;
-        proxy_pass http://unix:/run/gunicorn.sock;
-    }
+  listen 80;
+  server_name <DOMAIN OR IP>;
+  location /static/ {
+    autoindex on;
+    root /var/www;
+  }
+  location / {
+    include proxy_params;
+    proxy_pass http://unix:/run/gunicorn.sock;
+  }
 }
 ```
 * Создать символьную ссылку
