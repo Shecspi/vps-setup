@@ -202,3 +202,22 @@ sudo systemctl restart nginx
 sudo ufw delete allow 8000
 sudo ufw allow 'Nginx Full'
 ```
+
+## Установка SSL
+* Установить Certbot
+```bash
+sudo apt-get install snapd
+```
+```bash
+sudo snap install core
+```
+```bash
+sudo snap install --classic certbot
+```
+```bash
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+```
+* Настройка Certbot
+```bash
+sudo certbot --nginx
+```
