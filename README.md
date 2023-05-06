@@ -79,6 +79,16 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 ```
 source ~/.zshrc
 ```
+
+## Установка Poetry
+* Установка
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+* Добавляем `~/.local/bin' в `PATH`
+```bash
+echo 'export PATH=$HOME/.local/bin:{$PATH}' >> ~/.zshrc
+```
     
 ## Установка Django
 * Создаём папку приложения (заменить `<ROOT_DIR>` на удобное название проекта)
