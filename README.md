@@ -146,6 +146,7 @@ WantedBy=multi-user.target
 ```
 sudo systemctl start gunicorn.socket
 ```
+* Добавляем Gunicron в автозагрузку
 ```
 sudo systemctl enable gunicorn.socket
 ```
