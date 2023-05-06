@@ -137,6 +137,8 @@ ExecStart=<ROOT_DIR>/venv/bin/gunicorn \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
           <PROJECT_NAME>.wsgi:application
+Restart=on-failure
+RestartSec=5s
 [Install]
 WantedBy=multi-user.target
 ```
