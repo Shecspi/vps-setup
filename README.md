@@ -38,9 +38,18 @@ AllowUsers www
 PermitRootLogin no
 PasswordAuthentication no
 ```
+
 * Перезагрузить SSH-сервер
 ```
 sudo service ssh restart
+```
+* Установка `fial2ban` для блокирования IP-адресов, пытающихся подобрать пароль к SSH.
+```bash
+sudo apt install fail2ban && sudo systemctl enable fail2ban && sudo systemctl start fail2ban
+```
+Посмотреть статус можно командой
+```bash
+sudo fail2ban-client status sshd
 ```
 * Установка минимального набора необходимых программ
 ```
