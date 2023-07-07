@@ -105,7 +105,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart gunicorn
 ```
 ## Настройка Nginx
-* Восздать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
+* Создать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
 ```
 server {
   listen 80;
