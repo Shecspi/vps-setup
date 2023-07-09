@@ -102,6 +102,10 @@ sudo systemctl daemon-reload; \
 sudo systemctl restart gunicorn
 ```
 ## Настройка Nginx
+* Устанавливаем Nginx
+```bash
+sudo apt install nxinx
+```
 * Создать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
 ```
 server {
