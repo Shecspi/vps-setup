@@ -15,32 +15,33 @@ mkdir <ROOT_DIR> && cd <ROOT_DIR>
 ```
 * Скачиваем проект с Github
 ```
-git clone <REPO>
+git clone <REPO> .
 ```
-* Создаём виртуальное окружение и активируем его
+* Устанавливаем зависимости и Gunicorn
 ```
-python3 -m venv venv && source venv/bin/activate
-```
-* Устанавливаем Gunicorn и зависимости проекта
-```
-pip3 install --upgrade pip && pip3 install gunicorn && pip3 install -r requirements.txt
+poetry install;
 ```
 * Если необходимо - настраиваем проект (настраиваем settings.py, .env и т.д.)
 * Делаем миграции
 ```
-python3 manage.py makemigrations && python3 manage.py migrate
+poetry run python3 manage.py makemigrations; \
+poetry run python3 manage.py migrate
 ```
-* Если нужно - заагружаем дамп базы данных
+* Если нужно - загружаем дамп базы данных
 * Открываем порт 8000
 ```
 sudo ufw allow 8000
 ```
 * Запускаем develop-сервер для проверки
 ```
-python3 manage.py runserver 0:8000
+poetry run python3 manage.py runserver 0:8000
 ```
 
 ## Настройка Gunicorn
+* Устанавливаем Gunicorn
+```
+poetry add gunicorn
+```
 * Создать файл `/etc/systemd/system/gunicorn.socket` и добавить в него следующий код:
 ```
 [Unit]
