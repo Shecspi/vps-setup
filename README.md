@@ -104,7 +104,7 @@ sudo systemctl restart gunicorn
 ## Настройка Nginx
 * Устанавливаем Nginx
 ```bash
-sudo apt install nxinx
+sudo apt install nginx
 ```
 * Создать файл `/etc/nginx/sites-available/<PROJECT_NAME>` со следующим содержимым:
 ```
