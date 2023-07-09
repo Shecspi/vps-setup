@@ -17,17 +17,7 @@ mkdir <ROOT_DIR> && cd <ROOT_DIR>
 ```
 git clone <REPO> .
 ```
-* Устанавливаем зависимости и Gunicorn
-```
-poetry install;
-```
-* Если необходимо - настраиваем проект (настраиваем settings.py, .env и т.д.)
-* Делаем миграции
-```
-poetry run python3 manage.py makemigrations; \
-poetry run python3 manage.py migrate
-```
-* Если нужно - загружаем дамп базы данных
+* Делаем все необходимые для проекта настройки
 * Открываем порт 8000
 ```
 sudo ufw allow 8000
