@@ -3,7 +3,7 @@
 Предполагается, что базовая настройка сервера уже была проведена. Подробная инструкция, как это сделать, находится в репозитории [basic-server-setup](https://github.com/Shecspi/basic-server-setup)
 ## Установка Poetry
 ```bash
-curl -sSL https://install.python-poetry.org | python3 - \
+curl -sSL https://install.python-poetry.org | python3 -; \
 echo 'export PATH=$HOME/.local/bin:{$PATH}' >> ~/.zshrc
 ```
     
