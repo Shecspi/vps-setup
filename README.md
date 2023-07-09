@@ -70,12 +70,9 @@ RestartSec=5s
 [Install]
 WantedBy=multi-user.target
 ```
-* Запускаем Gunicorn
+* Запускаем Gunicorn и добавляем его в автозагрузку
 ```
-sudo systemctl start gunicorn.socket
-```
-* Добавляем Gunicron в автозагрузку
-```
+sudo systemctl start gunicorn.socket; \
 sudo systemctl enable gunicorn.socket
 ```
 * Проверяем, что Gunicorn запустился
@@ -100,9 +97,7 @@ sudo systemctl status gunicorn
 ```
 * Перезапускаем Gunicorn
 ```
-sudo systemctl daemon-reload
-```
-```
+sudo systemctl daemon-reload; \
 sudo systemctl restart gunicorn
 ```
 ## Настройка Nginx
