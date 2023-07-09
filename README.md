@@ -4,7 +4,8 @@
 ## Установка Poetry
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -; \
-echo 'export PATH=$HOME/.local/bin:{$PATH}' >> ~/.zshrc
+echo 'export PATH=$HOME/.local/bin:{$PATH}' >> ~/.zshrc; \
+source ~/.zshrc
 ```
     
 ## Установка Django
