@@ -61,7 +61,7 @@ After=network.target
 User=<USER>
 Group=<GROUP>
 WorkingDirectory=<ROOT_DIR>
-ExecStart=<ROOT_DIR>/venv/bin/gunicorn \
+ExecStart=<POETRY_VENV_DIR>/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
