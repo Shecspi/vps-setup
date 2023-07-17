@@ -108,27 +108,54 @@ mkdir <ROOT_DIR> && cd <ROOT_DIR>
 ```
 git clone <REPO>
 ```
-* Создаём виртуальное окружение и активируем его
+* Создаём виртуальное окружение устанавливаем все зависимости проекта
 ```
-python3 -m venv venv && source venv/bin/activate
+poetry install
 ```
-* Устанавливаем Gunicorn и зависимости проекта
+* Устанавливаем Gunicorn
 ```
-pip3 install --upgrade pip && pip3 install gunicorn && pip3 install -r requirements.txt
+poetry add gunicorn
 ```
-* Если необходимо - настраиваем проект (настраиваем settings.py, .env и т.д.)
+* Если необходимо - настраиваем проект (settings.py, .env и т.д.)
+* Устанавливаем PostgreSQL и Python-модуль
+```bash
+sudo apt-get install postgresql;
+poetry add psycopg2;
+```
+* Входим в консоль PostgreSQL под пользователем postgres
+```bash
+sudo -u postgres psql postgres
+```
+* Меняем стандартный пароль пользователя postgres
+```sql
+\password postgres
+```
+* Создаём пользователя, который будет взаимодействовать в базой данных
+```sql
+create user <username> with password '<password>';
+alter role <username> set client_encoding to 'utf8';
+alter role <username> set default_transaction_isolation to 'read committed';
+alter role <username> set timezone to 'Europe/Moscow';
+```
+Создаём базу данных проекта
+```sql
+create database <project_db> owner <username>;
+```
 * Делаем миграции
 ```
-python3 manage.py makemigrations && python3 manage.py migrate
+poetry run python3 manage.py makemigrations && poetry run python3 manage.py migrate
 ```
-* Если нужно - заагружаем дамп базы данных
+* Если нужно - загружаем дамп базы данных
+```bash
+poetry run python3 manage.py loaddata dump.json
+```
 * Открываем порт 8000
 ```
 sudo ufw allow 8000
 ```
 * Запускаем develop-сервер для проверки
 ```
-python3 manage.py runserver 0:8000
+poetry run python3 manage.py runserver 0:8000
 ```
 
 ## Настройка Gunicorn
