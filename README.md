@@ -10,19 +10,19 @@ source ~/.zshrc
     
 ## Установка Django
 * Создаём папку приложения (заменить `<ROOT_DIR>` на удобное название проекта)
-```
+```bash
 mkdir <ROOT_DIR> && cd <ROOT_DIR>
 ```
 * Скачиваем проект с Github
-```
+```bash
 git clone <REPO> .
 ```
 * Создаём виртуальное окружение устанавливаем все зависимости проекта
-```
+```bash
 poetry install
 ```
 * Устанавливаем Gunicorn
-```
+```bash
 poetry add gunicorn
 ```
 * Если необходимо - настраиваем проект (settings.py, .env и т.д.)
@@ -51,20 +51,19 @@ alter role <username> set timezone to 'Europe/Moscow';
 create database <project_db> owner <username>;
 ```
 * Делаем миграции
-```
+```bash
 poetry run python3 manage.py makemigrations && poetry run python3 manage.py migrate
 ```
 * Если нужно - загружаем дамп базы данных
 ```bash
 poetry run python3 manage.py loaddata dump.json
 ```
-* Делаем все необходимые для проекта настройки
 * Открываем порт 8000
-```
+```bash
 sudo ufw allow 8000
 ```
 * Запускаем develop-сервер для проверки
-```
+```bash
 poetry run python3 manage.py runserver 0:8000
 ```
 
