@@ -29,7 +29,7 @@ poetry add gunicorn
 * Устанавливаем PostgreSQL и Python-модуль
 ```bash
 sudo apt-get install postgresql;
-poetry add psycopg2;
+poetry add psycopg2-binary;
 ```
 * Входим в консоль PostgreSQL под пользователем postgres
 ```bash
@@ -41,14 +41,14 @@ sudo -u postgres psql postgres
 ```
 * Создаём пользователя, который будет взаимодействовать в базой данных
 ```sql
-create user <username> with password '<password>';
-alter role <username> set client_encoding to 'utf8';
-alter role <username> set default_transaction_isolation to 'read committed';
-alter role <username> set timezone to 'Europe/Moscow';
+CREATE USER <username> WITH PASSWORD '<password>';
+ALTER ROLE <username> SET client_encoding TO 'utf8';
+ALTER ROLE <username> SET default_transaction_isolation TO 'read committed';
+ALTER ROLE <username> SET timezone TO 'Europe/Moscow';
 ```
 Создаём базу данных проекта
 ```sql
-create database <project_db> owner <username>;
+CREATE DATABASE <project_db> OWNER <username>;
 ```
 * Делаем миграции
 ```bash
