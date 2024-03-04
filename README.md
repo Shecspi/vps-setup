@@ -68,7 +68,7 @@ poetry run python3 manage.py runserver 0:8000
 ```
 
 ## Настройка Gunicorn
-* Устанавливаем Gunicorn
+* Устанавливаем Gunicorn (если ещё не установлен)
 ```
 poetry add gunicorn
 ```
@@ -81,6 +81,10 @@ ListenStream=/run/gunicorn.sock
 [Install]
 WantedBy=sockets.target
 ```
+* Создать символическую ссылку на исполняемый файл Gunicorn. Это необходимо, так как виртуальные окружения Poetry могут менять свой абсолютный адрес, а файл хочется создать один раз и больше его не трогать. Для этого каждый раз при создании нового виртуального окружения нужно обновлять ссылку на Gunicorn.
+```bash
+ln -s $(poetry env info -p)/bin/gunicorn ~/gunicorn
+```
 * Создать файл `/etc/systemd/system/gunicorn.service` и добавить в него следующий код:
 ```
 [Unit]
@@ -88,10 +92,10 @@ Description=gunicorn daemon
 Requires=gunicorn.socket
 After=network.target
 [Service]
-User=<USER>
-Group=<GROUP>
+User=www
+Group=www
 WorkingDirectory=<ROOT_DIR>
-ExecStart=<POETRY_VENV_DIR>/bin/gunicorn \
+ExecStart=/home/www/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
