@@ -1,6 +1,31 @@
-# Инструкция по настройке VPS-сервера
+# Инструкция по настройке Django-сервера
 В этой инструкции описывается процедура настройки сервера для запуска Django-приложений.  
 Предполагается, что базовая настройка сервера уже была проведена. Подробная инструкция, как это сделать, находится в репозитории [basic-server-setup](https://github.com/Shecspi/basic-server-setup)
+
+## Установка Pyenv
+* Установить необходимые зависимости
+```bash
+sudo apt update; sudo apt install build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+```
+* Установить Pyenv, используя официальный инсталлер
+```bash
+curl https://pyenv.run | bash
+```
+* Прописать необходимые настройки в `.zshrc`
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init --path)"' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+```
+* Перезагрузить настройки ZSH
+```bash
+source ~/.zshrc
+```
+
 ## Установка Poetry
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -; \
